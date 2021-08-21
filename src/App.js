@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from 'react';
+import { Button } from './components';
+const node = { id: '', lvl: 0, name: 'p', surename: 'o' };
+const edge = { from: 0, to: 1, type: 'son' };
 function App() {
+  const [nodes, setNodes] = useState([node]);
+  const [edges, setEdges] = useState([edge]);
+  const data = { nodes, edges };
+
+  const addNode = () => {
+    setNodes([...nodes, node]);
+  };
+  const addEdge = () => {
+    setEdges([...edges, edge]);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Button onClick={addNode}>add Node</Button>
+      <Button onClick={addEdge}>add Edge</Button>
+      {JSON.stringify(data, 0, 1)}
     </div>
   );
 }
