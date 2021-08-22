@@ -23,8 +23,8 @@ const TreePage = () => {
 
   return (
     <TreeWrapper>
-      <Button onClick={addNode}>add Node</Button>
-      <Button onClick={addEdge}>add Edge</Button>
+      <Button onClick={() => addNode()}>add Node</Button>
+      <Button onClick={() => addEdge()}>add Edge</Button>
       <Button onClick={handleShowModal}>add </Button>
       <div>{JSON.stringify(data, 0, 1)}</div>
       {isModalActive ? <AddFamilyMemberModal addNode={addNode} addEdge={addEdge} hideModal={handleShowModal} /> : null}
