@@ -2,7 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { Wrapper, Content, CloseIcon } from './ModalCss';
 
-export default function Modal({ children, isStatic, hideModal }) {
+export default function Modal({ children, isStatic, hideModal, testContainer }) {
   return createPortal(
     <Wrapper onClick={hideModal}>
       <Content isStatic={isStatic} onClick={(e) => e.stopPropagation()}>
@@ -10,6 +10,6 @@ export default function Modal({ children, isStatic, hideModal }) {
         {children}
       </Content>
     </Wrapper>,
-    document.querySelector('#modal')
+    testContainer ? testContainer : document.querySelector('#modal')
   );
 }

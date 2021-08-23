@@ -5,7 +5,7 @@ import { ButtonsGrid } from './AddFamilyMemberModalCss';
 import { NewMemberForm } from 'pages/TreePage/Components';
 import { capitalizeFirstLetter } from 'helpers';
 
-const AddFamilyMemberModal = ({ addEdge, addNode, hideModal }) => {
+const AddFamilyMemberModal = ({ addEdge, addNode, hideModal, ...props }) => {
   const [selectedFamilyMember, setSelectedFamilyMember] = useState(null);
 
   const Buttons = FAMILYMEMBERS.map((FamilyMember) => (
@@ -15,12 +15,12 @@ const AddFamilyMemberModal = ({ addEdge, addNode, hideModal }) => {
   ));
 
   const handleAddFamilyMember = (values) => {
-    console.log(values);
+    addNode({ id: '', lvl: '0', name: values.name, surename: 'o' });
     hideModal();
   };
 
   return (
-    <Modal hideModal={hideModal}>
+    <Modal hideModal={hideModal} {...props}>
       <ButtonsGrid>{Buttons}</ButtonsGrid>
       {selectedFamilyMember ? <NewMemberForm onSubmit={handleAddFamilyMember} /> : null}
     </Modal>
