@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const RootButton = styled.button`
-  color: pink;
   cursor: pointer;
   border: none;
   background-color: gray;

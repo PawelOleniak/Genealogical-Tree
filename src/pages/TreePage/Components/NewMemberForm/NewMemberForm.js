@@ -1,34 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from 'components/InputTemplates';
 import { Form, Field } from 'react-final-form';
 import { Button } from 'components';
 import { noop } from 'lodash';
-const NewMemberForm = ({ onSubmit = noop }) => {
+import Toggle from 'react-toggle';
+import { FormWrapper } from './NewMemberFormCss';
+import MaleIcon from 'utils/male.svg';
+import FemaleIcon from 'utils/female.svg';
+import { CONSTS } from 'data/constants';
+
+const MyToggle = ({ input, meta, name, isMale, handleGenderChange, values, ...rest }) => {
   return (
-    <div>
+    <label>
+      <Toggle
+        {...input}
+        rest={rest}
+        name={name}
+        checked={isMale}
+        value="yes"
+        icons={{
+          checked: <img width={19} src={MaleIcon} alt="React Logo" />,
+          unchecked: <img width={19} src={FemaleIcon} alt="React Logo" />,
+        }}
+        onChange={handleGenderChange}
+      />
+      {meta.error && meta.touched && <span>{meta.error}</span>}
+    </label>
+  );
+};
+const NewMemberForm = ({ onSubmit = noop }) => {
+  const [isMale, setIsMale] = useState(true);
+  const handleGenderChange = () => {
+    setIsMale(!isMale);
+  };
+  return (
+    <FormWrapper>
       <Form
         onSubmit={onSubmit}
-        render={({ handleSubmit, form, submitting, pristine, values }) => (
-          <form onSubmit={handleSubmit}>
-            <Field description="Name" name="name" placeholder="name" component={Input} />
-            <div className="buttons">
-              <Button
-                type="button"
-                variant={'inline'}
-                style={{ marginRight: '30px' }}
-                onClick={form.reset}
-                disabled={submitting || pristine}
-              >
-                Reset
-              </Button>
-              <Button type="submit" variant={'inline'} primary disabled={submitting}>
-                Submit
-              </Button>
-            </div>
-          </form>
-        )}
+        render={({ handleSubmit, form, submitting, pristine, values }) => {
+          values.gender = isMale ? CONSTS.MALE : CONSTS.FEMALE;
+          return (
+            <form onSubmit={handleSubmit}>
+              <Field description="Name" name="name" placeholder="name" component={Input} />
+              <span>Gender</span>
+              <div className="buttons">
+                <Field
+                  description="gender"
+                  name="gender"
+                  isMale={isMale}
+                  values={values}
+                  handleGenderChange={handleGenderChange}
+                  component={MyToggle}
+                />
+                <Button
+                  type="button"
+                  variant={'inline'}
+                  style={{ marginRight: '30px' }}
+                  onClick={form.reset}
+                  disabled={submitting || pristine}
+                >
+                  Reset
+                </Button>
+                <Button type="submit" variant={'inline'} primary disabled={submitting}>
+                  Submit
+                </Button>
+              </div>
+            </form>
+          );
+        }}
       />
-    </div>
+    </FormWrapper>
   );
 };
 

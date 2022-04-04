@@ -1,12 +1,17 @@
+import SignIn from 'pages/SignIn/SignIn';
+import { Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import { TreePage, LoginPage } from './pages';
+import { TreePage } from './pages';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <ProtectedRoute validator={true} Component={TreePage} Fallback={LoginPage} />
+        <Switch>
+          <Route path="/Tree" exact component={TreePage} />
+          <SignIn path="/" />
+        </Switch>
       </Router>
     </div>
   );

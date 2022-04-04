@@ -1,17 +1,39 @@
-const SON = 'son';
-const DAUGHTER = 'daughter';
+const CHILD = 'child';
 
-const FATHER = 'father';
-const MOTHER = 'mother';
+const PARENT = 'parent';
 
-const SISTER = 'sister';
-const BROTHER = 'brother';
+const SIBLING = 'sibling';
 
-const WIFE = 'wife';
-const HUSBAND = 'husband';
+const PARTNER = 'partner';
 
-const EXWIFE = 'ex-wife';
-const EXHUSBAND = 'ex-husband';
+const EXPARTNER = 'ex-partner';
 
-export const CONSTS = { DAUGHTER, SON, FATHER, MOTHER, SISTER, BROTHER, WIFE, HUSBAND, EXWIFE, EXHUSBAND };
-export const FAMILYMEMBERS = [DAUGHTER, SON, MOTHER, FATHER, SISTER, BROTHER, WIFE, HUSBAND, EXWIFE, EXHUSBAND];
+const FEMALE = 'female';
+const MALE = 'male';
+
+const MEMBERWIDTH = 120;
+const MEMBERHEIGHT = 70;
+
+const GRIDROWNUM = 30;
+const ROWHEIGHT = 180;
+
+const COLUMNWIDTH = 500;
+
+const XGAPS = { ALONESIBLINGS: 180, SIBLINGWITHPARTNER: 200, PARTNER: 130 };
+
+export const CONSTS = {
+  CHILD,
+  PARENT,
+  PARTNER,
+  SIBLING,
+  EXPARTNER,
+  FEMALE,
+  MALE,
+  XGAPS,
+  COLUMNWIDTH,
+  ROWHEIGHT,
+  MEMBERWIDTH,
+  MEMBERHEIGHT,
+  GRIDROWNUM,
+};
+export const FAMILYMEMBERS = [CHILD, PARENT, PARTNER, SIBLING, EXPARTNER];

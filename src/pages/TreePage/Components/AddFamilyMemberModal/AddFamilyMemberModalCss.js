@@ -1,14 +1,21 @@
 import styled from 'styled-components';
 
 export const ButtonsGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+
   row-gap: 15px;
-  > :nth-child(even) {
-    margin-left: 50px;
+  span {
+    text-shadow: 1px 1px gray;
+  }
+  .selected {
+    background-color: lightgray;
+  }
+
+  button {
+    margin: 0 50px;
     color: darkcyan;
   }
-  > :nth-child(odd) {
-    margin-right: 50px;
+  button:disabled {
+    opacity: 0.5;
   }
 `;
