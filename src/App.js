@@ -1,3 +1,4 @@
+import { ProtectedRoute } from 'components';
 import SignIn from 'pages/SignIn/SignIn';
 import { Switch } from 'react-router-dom';
 import { Route } from 'react-router-dom';
@@ -9,8 +10,8 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/Tree" exact component={TreePage} />
-          <SignIn path="/" />
+          <SignIn exact path="/" />
+          <ProtectedRoute path="/Tree" Component={TreePage} />
         </Switch>
       </Router>
     </div>

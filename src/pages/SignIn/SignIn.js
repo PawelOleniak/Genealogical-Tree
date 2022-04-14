@@ -6,6 +6,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { app, auth } from 'index';
 import { Link } from 'react-router-dom';
+import { SignWrapper } from './SignInCss';
+import { Button } from 'components';
 const signInWithGoogle = async () => {
   const db = getFirestore(app);
   const googleProvider = new GoogleAuthProvider();
@@ -40,19 +42,11 @@ const SignIn = () => {
     if (user) history.push('/Tree');
   }, [user, loading]);
   return (
-    <div className="login">
-      <div className="login__container">
-        <button className="login__btn login__google" onClick={signInWithGoogle}>
-          Login with Google
-        </button>
-        <div>
-          <Link to="/reset">Forgot Password</Link>
-        </div>
-        <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
-        </div>
-      </div>
-    </div>
+    <SignWrapper className="login">
+      <div>In current Version app is only usable on desktop Browsers</div>
+      <div>Signing up/in is necessary for future tree sharing mechanizm </div>
+      <Button onClick={signInWithGoogle}>Login with Google</Button>
+    </SignWrapper>
   );
 };
 export default SignIn;

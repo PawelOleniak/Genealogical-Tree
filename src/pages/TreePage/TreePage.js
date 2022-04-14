@@ -11,6 +11,9 @@ import { Button } from 'components';
 import { loadUserData, setUserData } from 'helpers/saveState';
 import { loadToState } from 'reducers';
 import LoadFamilyTreeFormModal from './Components/LoadFamilyTreeFormModal/LoadFamilyTreeFormModal';
+import { signOut } from 'firebase/auth';
+import { auth } from 'index';
+import { useHistory } from 'react-router-dom';
 
 const TreePage = ({ ...props }) => {
   const [isModalActive, setIsModalActive] = useState(false);
@@ -60,7 +63,7 @@ const TreePage = ({ ...props }) => {
         />
       ))
     : null;
-
+  const xd = 0;
   const PartnersRelations = findAllRelations(lists, CONSTS.PARTNER);
   const PartnersLines = PartnersRelations.map(([fromId, toId]) => {
     const from = nodes[fromId].position;
@@ -79,7 +82,74 @@ const TreePage = ({ ...props }) => {
   });
 
   const parentRelations = findAllRelations(lists, CONSTS.PARENT);
-  const parentLines = parentRelations.map(([fromId, toId], index) => {
+  const parentLines = ParentLines(parentRelations, nodes, rows);
+  const [offset, setOffset] = useState(1);
+  const onScroll = (e) => {
+    setOffset(Math.max(0.3, offset - e.deltaY / 1250));
+  };
+  const history = useHistory();
+  const ref = useDraggable();
+  return (
+    <TreeWrapper height={treeLvls.length * CONSTS.ROWHEIGHT * 1.5} offset={offset} onWheel={onScroll}>
+      <div className="menuButtons">
+        <div className="dataButtons">
+          <Button
+            onClick={() => {
+              setIsLoadMode(false);
+              setIsInputModalActive(true);
+            }}
+          >
+            Save
+          </Button>
+          <Button
+            onClick={() => {
+              setIsLoadMode(true);
+              setIsInputModalActive(true);
+            }}
+          >
+            Load
+          </Button>
+        </div>
+        <Button
+          onClick={() => {
+            signOut(auth)
+              .then(() => {
+                history.push('/');
+              })
+              .catch((error) => {});
+          }}
+        >
+          Sign out
+        </Button>
+      </div>
+      <svg height={CONSTS.ROWHEIGHT * 20} id="TreePanel">
+        <g className="scroller">
+          <g ref={ref}>
+            {treeLvls}
+            {PartnersLines}
+            {/* {SiblingsLines} */}
+            {parentLines}
+            {elements}
+          </g>
+        </g>
+      </svg>
+      {isModalActive ? (
+        <AddFamilyMemberModal
+          selectedFamilyMember={selectedFamilyMember}
+          selectedRow={selectedRow}
+          hideModal={handleShowModal}
+          editMode={editMode}
+          {...props}
+        />
+      ) : null}
+      {isInputModalActive ? <LoadFamilyTreeFormModal hideModal={handleShowLoadModal} isLoadMode={isLoadMode} /> : null}
+    </TreeWrapper>
+  );
+};
+
+export default TreePage;
+function ParentLines(parentRelations, nodes, rows) {
+  return parentRelations.map(([fromId, toId], index) => {
     const from = nodes[parentRelations[index][0]].position;
     const firstParentColum = nodes[toId[0]].position.column;
     const secondParentColumn = toId[1] ? nodes[toId[1]].position.column : firstParentColum;
@@ -113,53 +183,22 @@ const TreePage = ({ ...props }) => {
       </g>
     );
   });
-  const [offset, setOffset] = useState(1);
-  const onScroll = (e) => {
-    setOffset(Math.max(0.3, offset - e.deltaY / 1250));
-  };
+}
 
-  const ref = useDraggable();
-  return (
-    <TreeWrapper height={treeLvls.length * CONSTS.ROWHEIGHT * 1.5} offset={offset} onWheel={onScroll}>
-      <Button
-        onClick={() => {
-          setIsLoadMode(false);
-          setIsInputModalActive(true);
-        }}
-      >
-        save
-      </Button>
-      <Button
-        onClick={() => {
-          setIsLoadMode(true);
-          setIsInputModalActive(true);
-        }}
-      >
-        load
-      </Button>
-      <svg height={CONSTS.ROWHEIGHT * 20} id="TreePanel">
-        <g className="scroller">
-          <g ref={ref}>
-            {treeLvls}
-            {PartnersLines}
-            {/* {SiblingsLines} */}
-            {parentLines}
-            {elements}
-          </g>
-        </g>
-      </svg>
-      {isModalActive ? (
-        <AddFamilyMemberModal
-          selectedFamilyMember={selectedFamilyMember}
-          selectedRow={selectedRow}
-          hideModal={handleShowModal}
-          editMode={editMode}
-          {...props}
-        />
-      ) : null}
-      {isInputModalActive ? <LoadFamilyTreeFormModal hideModal={handleShowLoadModal} isLoadMode={isLoadMode} /> : null}
-    </TreeWrapper>
-  );
+export const ParentLine = (PartnersRelations, nodes, rows) => {
+  return PartnersRelations.map(([fromId, toId]) => {
+    const from = nodes[fromId].position;
+    const to = nodes[[toId]].position;
+
+    return (
+      <line
+        key={fromId + toId + 'partnersLine'}
+        className="partnerLine"
+        x1={(from.column + from.shift) * CONSTS.XGAPS.ALONESIBLINGS + CONSTS.MEMBERWIDTH / 2}
+        x2={(to.column + to.shift) * CONSTS.XGAPS.ALONESIBLINGS + CONSTS.MEMBERWIDTH / 2}
+        y1={(from.row + 0.5 + rows.length / 2) * CONSTS.ROWHEIGHT}
+        y2={(from.row + 0.5 + rows.length / 2) * CONSTS.ROWHEIGHT}
+      />
+    );
+  });
 };
-
-export default TreePage;

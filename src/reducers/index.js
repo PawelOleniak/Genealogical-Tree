@@ -3,14 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import addFamilyMemberReducerFunctions from './addMemberReducerFunctions';
 import updateGridDimFunctions from './updateGridDimFunctions';
 import mapColumnsMembersReducer from './mapMembersGridReducerFunctions';
-import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import { app, auth } from 'index';
 
 const nodes = {
   root: {
     gender: CONSTS.MALE,
     name: 'p',
     surname: 'o',
+    birthDate: '2000-01-01',
     childCount: 0,
     childInLawCount: 0,
     haveParents: true,
@@ -20,6 +19,8 @@ const nodes = {
     gender: CONSTS.MALE,
     name: 'z',
     surname: 'o',
+    birthDate: '1949-01-01',
+    deathDate: '2000-01-01',
     childCount: 1,
     childInLawCount: 0,
     haveParents: false,
@@ -29,6 +30,8 @@ const nodes = {
     gender: CONSTS.FEMALE,
     name: 'm',
     surname: 'o',
+    birthDate: '1956-01-01',
+    deathDate: '2000-01-01',
     childCount: 1,
     childInLawCount: 0,
     haveParents: false,
@@ -51,7 +54,7 @@ const lists = {
   ],
 };
 const grid = { 0: new Array(CONSTS.GRIDROWNUM).fill(false), '-1': new Array(CONSTS.GRIDROWNUM).fill(false) };
-const initialState = { nodes, lists, grid, maxRow: 0 };
+const initialState = { nodes, lists, grid };
 
 const loadFnc = {
   loadToState: (state, action) => {

@@ -1,6 +1,17 @@
 import styled from 'styled-components';
 
 export const FormWrapper = styled.div`
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+  .genderToggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+
   input[type='checkbox'] {
     background-color: red;
   }

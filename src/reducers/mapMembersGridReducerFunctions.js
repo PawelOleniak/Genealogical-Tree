@@ -70,7 +70,7 @@ const fillSibling = ({ state, memberId, row, column, childCount, isFillingUpward
         state,
         row,
         iniColumn:
-          column + Math.ceil(childCount / 2) + Math.ceil(siblingsChildrenCount / 2) + Math.floor(childInLawCount / 2),
+          column + Math.ceil(childCount / 2) + Math.ceil(siblingsChildrenCount / 2) + Math.ceil(childInLawCount / 2),
       }),
       isFillingUpwards,
     });

@@ -32,4 +32,16 @@ export const TreeWrapper = styled.div`
   .parentLine {
     stroke-width: 1;
   }
+
+  .menuButtons {
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    justify-content: space-between;
+  }
+  .dataButtons {
+    display: flex;
+    flex-direction: row;
+  }
 `;

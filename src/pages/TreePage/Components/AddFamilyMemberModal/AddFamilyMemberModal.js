@@ -45,6 +45,8 @@ const AddFamilyMemberModal = ({ hideModal, selectedFamilyMember, selectedRow, ed
       id: selectedFamilyMember,
       name: values.name,
       gender: values.gender,
+      birthDate: values.birthDate,
+      deathDate: values.deathDate,
     };
     dispatch(editFamilyMember(payload));
     hideModal();

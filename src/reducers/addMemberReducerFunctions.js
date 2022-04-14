@@ -2,12 +2,14 @@ import { CONSTS } from 'data/constants';
 import { findRelatives, findUnplacedRelatives } from 'helpers';
 import { current } from '@reduxjs/toolkit';
 const addFamilyMember = ({ state, action, row, backwardRel }) => {
-  const { name, surename, gender, newId: id, forwardRel } = action.payload;
+  const { name, surename, gender, newId: id, forwardRel, birthDate, deathDate } = action.payload;
 
   state.nodes[id] = {
     gender,
     name,
     surename,
+    birthDate: birthDate ? birthDate : null,
+    deathDate: deathDate ? deathDate : null,
     childCount: 0,
     childInLawCount: 0,
     haveParents: false,
@@ -138,9 +140,11 @@ const addFamilyMemberReducerFunctions = {
     });
   },
   editFamilyMember: (state, action) => {
-    const { name, gender, id } = action.payload;
+    const { name, gender, id, deathDate, birthDate } = action.payload;
     state.nodes[id].name = name;
     state.nodes[id].gender = gender;
+    state.nodes[id].birthDate = birthDate;
+    state.nodes[id].deathDate = deathDate;
   },
 };
 export default addFamilyMemberReducerFunctions;

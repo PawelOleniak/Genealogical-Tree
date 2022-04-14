@@ -42,8 +42,11 @@ const NewMemberForm = ({ onSubmit = noop }) => {
           return (
             <form onSubmit={handleSubmit}>
               <Field description="Name" name="name" placeholder="name" component={Input} />
-              <span>Gender</span>
-              <div className="buttons">
+              <Field description="Date of Birth" name="birthDate" fieldType="date" component={Input} />
+              <Field description="Date of Death" name="deathDate" fieldType="date" component={Input} />
+              <div className="genderToggle">
+                <span>Gender</span>
+
                 <Field
                   description="gender"
                   name="gender"
@@ -52,16 +55,17 @@ const NewMemberForm = ({ onSubmit = noop }) => {
                   handleGenderChange={handleGenderChange}
                   component={MyToggle}
                 />
+              </div>
+              <div className="buttons">
                 <Button
                   type="button"
-                  variant={'inline'}
                   style={{ marginRight: '30px' }}
                   onClick={form.reset}
                   disabled={submitting || pristine}
                 >
                   Reset
                 </Button>
-                <Button type="submit" variant={'inline'} primary disabled={submitting}>
+                <Button type="submit" primary disabled={submitting}>
                   Submit
                 </Button>
               </div>
